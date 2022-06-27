@@ -1,4 +1,4 @@
-package structural.decorator
+package structural.decorator.muesli
 
 interface IMuesliIngredient {
     val name: String

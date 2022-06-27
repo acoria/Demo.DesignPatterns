@@ -1,3 +1,3 @@
-package structural.decorator
+package structural.decorator.muesli
 
 class MuesliIngredient(override val name: String) : IMuesliIngredient

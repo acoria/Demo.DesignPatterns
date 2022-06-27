@@ -1,4 +1,4 @@
-package structural.decorator
+package structural.decorator.muesli
 
 fun main() {
     println("Your muesli consists of:")

@@ -1,4 +1,4 @@
-package structural.decorator
+package structural.decorator.muesli
 
 interface IMuesli {
     fun consistsOf(): String

@@ -1,4 +1,4 @@
-package structural.decorator
+package structural.decorator.muesli
 
 class Muesli : IMuesli {
     private val ingredients = listOf(MuesliIngredient("Milk"))

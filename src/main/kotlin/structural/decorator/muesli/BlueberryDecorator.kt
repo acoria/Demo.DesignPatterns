@@ -1,4 +1,4 @@
-package structural.decorator
+package structural.decorator.muesli
 
 class BlueberryDecorator(private val muesli: IMuesli): IMuesli {
     override fun consistsOf(): String {
