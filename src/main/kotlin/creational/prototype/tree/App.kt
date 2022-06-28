@@ -1,4 +1,4 @@
-package creational.prototype
+package creational.prototype.tree
 
 fun main() {
     //instead of different subclasses for specific configurations, objects can be configured and cloned when needed

@@ -1,4 +1,4 @@
-package creational.prototype
+package creational.prototype.tree
 
 class Tree(private val type: TreeType) : ITree {
     //age and type are private and cannot be retrieved to make a copy if it is not cloned
@@ -14,11 +14,11 @@ class Tree(private val type: TreeType) : ITree {
     }
 
     override fun clone(): ITree {
-        val tree = Tree(type)
-        tree.age = age
-        tree.levelOfLightRequired = levelOfLightRequired
-        tree.litresOfWaterRequired = litresOfWaterRequired
-        tree.soil = soil
-        return tree
+        return Tree(type).also {
+            it.age = age
+            it.levelOfLightRequired = levelOfLightRequired
+            it.litresOfWaterRequired = litresOfWaterRequired
+            it.soil = soil
+        }
     }
 }

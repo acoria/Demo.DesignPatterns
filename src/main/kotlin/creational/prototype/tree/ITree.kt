@@ -1,4 +1,4 @@
-package creational.prototype
+package creational.prototype.tree
 
 interface ITree : ICloneable<ITree> {
     val height: Int
