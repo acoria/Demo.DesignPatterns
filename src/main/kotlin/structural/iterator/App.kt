@@ -1,25 +1,30 @@
 package structural.iterator
 
 fun main() {
-    val rootNode = Node("1.0")
+    val rootNode = Node("1")
     val node11 = Node("1.1")
     val node12 = Node("1.2")
     rootNode.addChild(node11)
     rootNode.addChild(node12)
-    val node110 = Node("1.1.0")
-    node11.addChild(node110)
-    val node1100 = Node("1.1.0.0")
     val node111 = Node("1.1.1")
     node11.addChild(node111)
-    node110.addChild(node1100)
-    val node120 = Node("1.2.0")
-    node12.addChild(node120)
+    val node1111 = Node("1.1.1.1")
+    val node112 = Node("1.1.2")
+    node11.addChild(node112)
+    node111.addChild(node1111)
+    val node121 = Node("1.2.1")
+    node12.addChild(node121)
 
-    repeat(2) {
-        val childrenIterator = ChildrenIterator(rootNode)
-        while (childrenIterator.hasNext()) {
-            println(childrenIterator.next().id)
+//    testIterator(ChildrenIterator(rootNode), 2)
+//    testIterator(GenericIterator(rootNode) { it.getChildren() })
+    testIterator(LevelIterator(rootNode, 2))
+}
+
+fun testIterator(iterator: IIterator<INode>, repeatTimes: Int = 1) {
+    repeat(repeatTimes) {
+        while (iterator.hasNext()) {
+            println(iterator.next().id)
         }
-        childrenIterator.reset()
+        iterator.reset()
     }
 }
