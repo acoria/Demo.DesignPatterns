@@ -15,9 +15,8 @@ fun main() {
     val node121 = Node("1.2.1")
     node12.addChild(node121)
 
-//    testIterator(ChildrenIterator(rootNode), 2)
 //    testIterator(GenericIterator(rootNode) { it.getChildren() })
-    testIterator(LevelIterator(rootNode, 2))
+    testIterator(LevelIterator<INode>(rootNode, 2) { it.getChildren() })
 }
 
 fun testIterator(iterator: IIterator<INode>, repeatTimes: Int = 1) {

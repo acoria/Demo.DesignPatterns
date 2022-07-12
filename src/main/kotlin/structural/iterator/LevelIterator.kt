@@ -1,43 +1,35 @@
 package structural.iterator
 
-class LevelIterator<T : IHaveChildren<T>>(root: T, private val numberOfLevels: Int) :
+class LevelIterator<T>(rootNode: T, numberOfLevels: Int, childrenProvider: ChildrenProvider<T>) :
     IIterator<T> {
-    private val genericIterator: IIterator<T>
-    private val levelOfElements = mutableMapOf<T, Int>()
-    private val childrenProvider: (T) -> List<T> = {
-        val children: List<T>
-        val levelOfElement = getLevelOfElement(it)
-        if (levelOfElement < numberOfLevels) {
-            val levelOfChild = levelOfElement + 1
-            children = it.getChildren().onEach { child -> this.levelOfElements[child] = levelOfChild }
-        } else {
-            children = listOf()
-        }
-        children
-    }
+    private val levelChildrenProvider = LevelChildrenProvider<T>(numberOfLevels, childrenProvider)
+    private val iterator: IIterator<T>
 
     init {
-        genericIterator = GenericIterator(root, childrenProvider)
-    }
-
-    private fun getLevelOfElement(element: T): Int {
-        return if (levelOfElements.isEmpty()) {
-            0
-        } else {
-            levelOfElements[element] ?: throw Error("Technical: Element $element not found")
+        iterator = GenericIterator(
+            rootNode,
+            levelChildrenProvider.create()
+        ).apply {
+            registerOnReset {
+                levelChildrenProvider.reset()
+            }
         }
     }
 
     override fun next(): T {
-        return genericIterator.next()
+        return iterator.next()
     }
 
     override fun hasNext(): Boolean {
-        return genericIterator.hasNext()
+        return iterator.hasNext()
     }
 
     override fun reset() {
-        levelOfElements.clear()
-        genericIterator.reset()
+        iterator.reset()
     }
+
+    override fun registerOnReset(callback: (IIterator<T>) -> Unit) {
+        iterator.registerOnReset(callback)
+    }
+
 }

@@ -1,7 +1,10 @@
 package structural.iterator
 
-class GenericIterator<T>(private val root: T, private val childrenProvider: (T) -> List<T>) : IIterator<T> {
+typealias ChildrenProvider<T> = (T) -> List<T>
+
+class GenericIterator<T>(private val root: T, private val childrenProvider: ChildrenProvider<T>) : IIterator<T> {
     private val stack = mutableListOf<T>()
+    private val resetEventHandler = mutableListOf<(IIterator<T>) -> Unit>()
 
     init {
         initializeStack()
@@ -32,5 +35,10 @@ class GenericIterator<T>(private val root: T, private val childrenProvider: (T) 
 
     override fun reset() {
         initializeStack()
+        resetEventHandler.forEach { it(this) }
+    }
+
+    override fun registerOnReset(eventHandler: (IIterator<T>) -> Unit) {
+        resetEventHandler.add(eventHandler)
     }
 }
